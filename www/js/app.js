@@ -3,90 +3,86 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-// 'starter.services' is found in services.js
-// 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'firebase'])
+angular.module('todo', ['ionic', 'todo.services'])
 
+.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+  //var base_url = "http://varitaiapp.zacsi.com/js/";
+  $stateProvider.state('landing', {
+    url: "/",
+    templateUrl: 'js/routes/landing.tpl.html',
+    controller: 'landingController',
+    authenticate: false
+  }).state('inside', {
+    url: "/inside",
+    templateUrl: 'js/routes/inside.tpl.html',
+    authenticate: true
+  }).state('login', {
+    url: "/login",
+    templateUrl: 'js/routes/login.tpl.html',
+    controller: 'loginController',
+    authenticate: false
+  });
+  $urlRouterProvider.otherwise("/");
+}])
 
-.config(function($stateProvider, $urlRouterProvider) {
+.controller('landingController', function($scope, AuthenticationService, $state) {
 
-  // Ionic uses AngularUI Router which uses the concept of states
-  // Learn more here: https://github.com/angular-ui/ui-router
-  // Set up the various states which the app can be in.
-  // Each state's controller can be found in controllers.js
-  $stateProvider
+  $scope.goInside = function() {
 
-    // setup an abstract state for the tabs directive
-    .state('splash', {
-      url: "/",
-      templateUrl: "templates/splash.html"
-    })
+    $state.go("inside");
 
-    .state('login', {
-      url: "/login",
-      templateUrl: "templates/login.html",
-      controller: 'LoginCtrl'
-    })
+    //console.log("Logging in");
+    //AuthenticationService.signIn('jon@tiltvideo.com','tilt225').then(function (response) {
 
-    .state('signup', {
-      url: '/signup',
-      templateUrl: 'templates/signup.html',
-      controller: 'SignupCtrl'
-    })
+    //  console.log(AuthenticationService.user());
 
-    // the pet tab has its own child nav-view and history
-    .state('home_landing', {
-      url: '/home',
-      templateUrl: 'templates/home.html',
-      controller: 'HomeCtrl'
-    });
-
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/');
+    //});    
+  }
 
 })
 
-.run(function($rootScope, $firebaseSimpleLogin, $state, $window) {
+.controller('loginController', function($scope, AuthenticationService, $state) {
 
-  var dataRef = new Firebase("https://ionic-firebase-login.firebaseio.com/");
-  var loginObj = $firebaseSimpleLogin(dataRef);
+  $scope.login = function() {
 
-  loginObj.$getCurrentUser().then(function(user) {
-    if(!user){ 
-      // Might already be handled by logout event below
-      $state.go('login');
+    console.log("Logging in");
+    AuthenticationService.signIn('jon@tiltvideo.com','tilt225').then(function (response) {
+
+    console.log(AuthenticationService.user());
+    $state.go("inside");
+
+    });    
+  }
+
+})
+
+.run(function($ionicPlatform,$rootScope, $state, $location, AuthenticationService) {
+  $ionicPlatform.ready(function() {
+    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+    // for form inputs)
+    if(window.cordova && window.cordova.plugins.Keyboard) {
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     }
-  }, function(err) {
+    if(window.StatusBar) {
+      StatusBar.styleDefault();
+    }
   });
 
-  $rootScope.$on('$firebaseSimpleLogin:login', function(e, user) {
-    $state.go('home_landing');
-  });
+  $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
 
-  $rootScope.$on('$firebaseSimpleLogin:logout', function(e, user) {
-    console.log($state);
-    $state.go('login');
-  });
-})
+        AuthenticationService.updateUserState();
 
-.controller('LoginCtrl', function($scope, $firebaseSimpleLogin) {
-  $scope.loginData = {};
+        console.log(AuthenticationService.user().isLoggedIn);
 
-  var dataRef = new Firebase("https://ionic-firebase-login.firebaseio.com/");
-  $scope.loginObj = $firebaseSimpleLogin(dataRef);
+        if (toState.authenticate && !AuthenticationService.user().isLoggedIn) {
+            // User isn’t authenticated
+            $state.transitionTo("login");
+            event.preventDefault();
 
-  $scope.tryLogin = function() {
-    $scope.loginObj.$login('facebook').then(function(user) {
-      // The root scope event will trigger and navigate
-    }, function(error) {
-      // Show a form error here
-      console.error('Unable to login', error);
+            console.log(AuthenticationService.user().userName);
+            //$scope.$apply(function () { $location.path("/login"); });
+            //$location.path("/login");
+        }
     });
-  };
-})
 
-.controller('SignupCtrl', function($scope) {
 })
-
-.controller('HomeCtrl', function($scope) {
-});

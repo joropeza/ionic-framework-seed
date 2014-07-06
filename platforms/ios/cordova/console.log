@@ -1,0 +1,25 @@
+2014-07-04 13:58:39.672 HelloCordova[362:70b] Multi-tasking -> Device: YES, App: YES
+2014-07-04 13:58:39.730 HelloCordova[362:70b] Unlimited access to network resources
+2014-07-04 13:58:39.953 HelloCordova[362:70b] [CDVTimer][keyboard] 0.061989ms
+2014-07-04 13:58:39.953 HelloCordova[362:70b] CDVPlugin class CDVStatusBar (pluginName: statusbar) does not exist.
+2014-07-04 13:58:39.953 HelloCordova[362:70b] [CDVTimer][statusbar] 0.447989ms
+2014-07-04 13:58:39.954 HelloCordova[362:70b] [CDVTimer][TotalPluginStartup] 1.343966ms
+2014-07-04 13:58:40.171 HelloCordova[362:70b] Resetting plugins due to page load.
+2014-07-04 13:58:40.508 HelloCordova[362:70b] Finished load of: file:///Users/jonny/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/0463F940-2EBD-4284-B1CA-ED85EB8E05EF/HelloCordova.app/www/index.html
+2014-07-04 13:58:44.277 HelloCordova[362:70b] pic
+2014-07-04 13:58:53.612 HelloCordova[362:70b] pic
+2014-07-04 14:32:55.764 HelloCordova[1981:70b] Multi-tasking -> Device: YES, App: YES
+2014-07-04 14:32:55.886 HelloCordova[1981:70b] Unlimited access to network resources
+2014-07-04 14:32:56.384 HelloCordova[1981:70b] [CDVTimer][keyboard] 0.079036ms
+2014-07-04 14:32:56.384 HelloCordova[1981:70b] CDVPlugin class CDVStatusBar (pluginName: statusbar) does not exist.
+2014-07-04 14:32:56.384 HelloCordova[1981:70b] [CDVTimer][statusbar] 0.406981ms
+2014-07-04 14:32:56.385 HelloCordova[1981:70b] [CDVTimer][TotalPluginStartup] 1.327991ms
+2014-07-04 14:32:56.607 HelloCordova[1981:70b] Resetting plugins due to page load.
+2014-07-04 14:32:56.871 HelloCordova[1981:70b] Finished load of: file:///Users/jonny/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/0463F940-2EBD-4284-B1CA-ED85EB8E05EF/HelloCordova.app/www/index.html
+2014-07-04 14:32:59.330 HelloCordova[1981:70b] pic
+2014-07-04 14:32:59.381 HelloCordova[1981:70b] Camera.getPicture: source type 1 not available.
+2014-07-04 14:32:59.382 HelloCordova[1981:70b] THREAD WARNING: ['Camera'] took '51.186035' ms. Plugin should use a background thread.
+2014-07-04 14:32:59.384 HelloCordova[1981:70b] no camera available
+2014-07-04 14:33:04.566 HelloCordova[1981:70b] pic
+2014-07-04 14:33:04.570 HelloCordova[1981:70b] Camera.getPicture: source type 1 not available.
+2014-07-04 14:33:04.575 HelloCordova[1981:70b] no camera available
