@@ -15,6 +15,7 @@ angular.module('todo', ['ionic', 'todo.services'])
   }).state('inside', {
     url: "/inside",
     templateUrl: 'js/routes/inside.tpl.html',
+    controller: 'insideController',
     authenticate: true
   }).state('login', {
     url: "/login",
@@ -49,10 +50,28 @@ angular.module('todo', ['ionic', 'todo.services'])
     AuthenticationService.signIn('jon@tiltvideo.com','tilt225').then(function (response) {
 
     console.log(AuthenticationService.user());
+    
+    //console.log(window.localStorage.removeItem("token"));
+
     $state.go("inside");
 
     });    
   }
+
+})
+
+.controller('insideController', function($scope, AuthenticationService, $state, $http) {
+
+    console.log("inside controller loaded");
+
+    $http.get('http://dev.tiltvideo.com/api/videos').then(function (response) {
+
+        console.log("success");
+
+    }, function() {
+        console.log("failed");
+        $state.go("login");
+    });
 
 })
 
@@ -74,15 +93,6 @@ angular.module('todo', ['ionic', 'todo.services'])
 
         console.log(AuthenticationService.user().isLoggedIn);
 
-        if (toState.authenticate && !AuthenticationService.user().isLoggedIn) {
-            // User isn’t authenticated
-            $state.transitionTo("login");
-            event.preventDefault();
-
-            console.log(AuthenticationService.user().userName);
-            //$scope.$apply(function () { $location.path("/login"); });
-            //$location.path("/login");
-        }
     });
 
 })

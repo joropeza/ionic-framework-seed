@@ -15,9 +15,7 @@ function ($rootScope, $http, $q, $location) {
     var getToken = function (userName, password) {
 
         console.log("get token?");
-         
 
-        
         var pString = "userName=jon%40tiltvideo.com&password=tilt225&grant_type=password";   
 
         // Send the $http request and return the promise
@@ -44,7 +42,12 @@ function ($rootScope, $http, $q, $location) {
                     token: 'Bearer ' + response.data.access_token
                 };
 
-                console.log(response.data.access_token);
+                
+                window.localStorage.setItem("token", response.data.access_token);
+
+                console.log(window.localStorage.getItem("token"));
+
+/*
 
                 // Set user cookie
                 $.cookie('user', angular.toJson(UserModel), { path: '/' });
@@ -54,8 +57,11 @@ function ($rootScope, $http, $q, $location) {
                 $http.defaults.headers.common["Authorization"] = angular.fromJson($.cookie('user')).token;
 
                 $rootScope.token = angular.fromJson($.cookie('user')).token;
-
+*/
                // Resolve the promise
+
+                $http.defaults.headers.common["Authorization"] = UserModel.token;
+
                 dfd.resolve();
 
                 // If request for token fails, reject the promise
